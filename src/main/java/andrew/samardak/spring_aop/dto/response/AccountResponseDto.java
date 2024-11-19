@@ -1,5 +1,6 @@
 package andrew.samardak.spring_aop.dto.response;
 
+import andrew.samardak.spring_aop.utils.enums.AccountStatus;
 import andrew.samardak.spring_aop.utils.enums.AccountType;
 import lombok.Data;
 
@@ -12,5 +13,9 @@ public class AccountResponseDto {
 
     private AccountType accountType;
 
+    private AccountStatus accountStatus;
+
     private BigDecimal balance;
+
+    private BigDecimal frozenAmount;
 }
