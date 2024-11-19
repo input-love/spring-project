@@ -1,15 +1,19 @@
 -- Создание таблицы accounts
 CREATE TABLE accounts
 (
-    id           BIGSERIAL PRIMARY KEY,
-    account_type VARCHAR(255)   NOT NULL,
-    balance      NUMERIC(10, 2) NOT NULL
+    id             BIGSERIAL PRIMARY KEY,
+    account_type   VARCHAR(255)   NOT NULL,
+    account_status VARCHAR(255)   NOT NULL,
+    balance        NUMERIC(10, 2) NOT NULL,
+    frozen_amount  NUMERIC(10, 2) NOT NULL
 );
 
 COMMENT ON TABLE accounts IS 'Таблица для хранения информации об аккаунтах пользователей';
 COMMENT ON COLUMN accounts.id IS 'Уникальный идентификатор аккаунта';
 COMMENT ON COLUMN accounts.account_type IS 'Тип аккаунта (например: дебетовый счет или кредитный)';
+COMMENT ON COLUMN accounts.account_status IS 'Статус аккаунта (например: открытый или арестованный)';
 COMMENT ON COLUMN accounts.balance IS 'Баланс на аккаунте';
+COMMENT ON COLUMN accounts.frozen_amount IS 'Сумма заблокированных транзакций';
 
 -- Создание таблицы transactions
 CREATE TABLE transactions
