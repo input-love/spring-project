@@ -18,13 +18,15 @@ COMMENT ON COLUMN accounts.frozen_amount IS 'Сумма заблокирован
 -- Создание таблицы transactions
 CREATE TABLE transactions
 (
-    id               BIGSERIAL PRIMARY KEY,
-    amount           NUMERIC(10, 2) NOT NULL,
-    transaction_time TIMESTAMP      NOT NULL
+    id                 BIGSERIAL PRIMARY KEY,
+    transaction_status VARCHAR(255)   NOT NULL,
+    amount             NUMERIC(10, 2) NOT NULL,
+    transaction_time   TIMESTAMP      NOT NULL
 );
 
 COMMENT ON TABLE transactions IS 'Таблица для хранения транзакций по аккаунтам';
 COMMENT ON COLUMN transactions.id IS 'Уникальный идентификатор транзакции';
+COMMENT ON COLUMN transactions.transaction_status IS 'Статус транзакции (например: принята или запрошена)';
 COMMENT ON COLUMN transactions.amount IS 'Сумма транзакции';
 COMMENT ON COLUMN transactions.transaction_time IS 'Время выполнения транзакции';
 
