@@ -4,7 +4,7 @@ server:
 
 spring:
   application:
-    name: 'spring-aop'
+    name: 'spring-project'
 
   datasource:
     url: ${DB_URL:jdbc:postgresql://postgres:5432/postgres}
@@ -13,7 +13,7 @@ spring:
     driver-class-name: org.postgresql.Driver
 
   kafka:
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: ${BOOTSTRAP_SERVERS:localhost:9092}
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
