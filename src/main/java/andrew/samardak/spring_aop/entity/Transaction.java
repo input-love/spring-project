@@ -1,6 +1,9 @@
 package andrew.samardak.spring_aop.entity;
 
+import andrew.samardak.spring_aop.utils.enums.TransactionStatus;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -27,6 +30,9 @@ public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Enumerated(EnumType.STRING)
+    private TransactionStatus transactionStatus;
 
     private BigDecimal amount;
 
