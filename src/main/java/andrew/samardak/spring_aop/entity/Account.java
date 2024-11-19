@@ -1,5 +1,6 @@
 package andrew.samardak.spring_aop.entity;
 
+import andrew.samardak.spring_aop.utils.enums.AccountStatus;
 import andrew.samardak.spring_aop.utils.enums.AccountType;
 import jakarta.persistence.Table;
 import jakarta.persistence.Entity;
@@ -32,5 +33,10 @@ public class Account {
     @Enumerated(EnumType.STRING)
     private AccountType accountType;
 
+    @Enumerated(EnumType.STRING)
+    private AccountStatus accountStatus;
+
     private BigDecimal balance;
+
+    private BigDecimal frozenAmount;
 }
