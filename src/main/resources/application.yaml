@@ -1,0 +1,30 @@
+server:
+  servlet:
+    context-path: /api
+
+spring:
+  application:
+    name: 'spring-aop'
+
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://postgres:5432/postgres}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
+
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+spring-project:
+  kafka:
+    topic:
+      metrics: t1_demo_metrics
+      accounts:
+        id: spring-aop-kafka-accounts
+        name: t1_demo_accounts
+      transactions:
+        id: spring-aop-kafka-transactions
+        name: t1_demo_transactions
