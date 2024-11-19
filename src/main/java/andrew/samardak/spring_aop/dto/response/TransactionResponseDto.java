@@ -1,5 +1,6 @@
 package andrew.samardak.spring_aop.dto.response;
 
+import andrew.samardak.spring_aop.utils.enums.TransactionStatus;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -9,6 +10,8 @@ import java.time.LocalDateTime;
 public class TransactionResponseDto {
 
     private Long id;
+
+    private TransactionStatus transactionStatus;
 
     private BigDecimal amount;
 
