@@ -11,4 +11,6 @@ public class TransactionRequestDto {
     private TransactionStatus transactionStatus;
 
     private BigDecimal amount;
+
+    private Long accountId;
 }

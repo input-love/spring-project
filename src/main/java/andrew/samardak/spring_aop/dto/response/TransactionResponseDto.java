@@ -16,4 +16,6 @@ public class TransactionResponseDto {
     private BigDecimal amount;
 
     private LocalDateTime transactionTime;
+
+    private Long accountId;
 }
