@@ -30,6 +30,25 @@ COMMENT ON COLUMN transactions.transaction_status IS 'Статус транза�
 COMMENT ON COLUMN transactions.amount IS 'Сумма транзакции';
 COMMENT ON COLUMN transactions.transaction_time IS 'Время выполнения транзакции';
 
+-- Создание таблицы clients
+CREATE TABLE clients
+(
+    id           BIGSERIAL PRIMARY KEY,
+    first_name   VARCHAR(255) NOT NULL,
+    last_name    VARCHAR(255) NOT NULL,
+    middle_name  VARCHAR(255),
+    blocked_for  BOOLEAN      NOT NULL,
+    blocked_whom TEXT
+);
+
+COMMENT ON TABLE clients IS 'Таблица для хранения информации о клиентах';
+COMMENT ON COLUMN clients.id IS 'Уникальный идентификатор клиента';
+COMMENT ON COLUMN clients.first_name IS 'Имя клиента';
+COMMENT ON COLUMN clients.last_name IS 'Фамилия клиента';
+COMMENT ON COLUMN clients.middle_name IS 'Отчество клиента';
+COMMENT ON COLUMN clients.blocked_for IS 'Флаг, указывающий, заблокирован ли клиент';
+COMMENT ON COLUMN clients.blocked_whom IS 'Причина блокировки клиента или информация о заблокированных';
+
 -- Создание таблицы error_logs
 CREATE TABLE error_logs
 (
