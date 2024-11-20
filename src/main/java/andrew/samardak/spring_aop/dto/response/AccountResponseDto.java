@@ -18,4 +18,6 @@ public class AccountResponseDto {
     private BigDecimal balance;
 
     private BigDecimal frozenAmount;
+
+    private Long clientId;
 }

@@ -16,4 +16,6 @@ public class AccountRequestDto {
     private BigDecimal balance;
 
     private BigDecimal frozenAmount;
+
+    private Long clientId;
 }
