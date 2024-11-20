@@ -18,16 +18,16 @@ import org.springframework.stereotype.Service;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class TransactionServiceImpl implements TransactionService {
 
-    TransactionRepository repository;
-    TransactionMapper mapper;
+    TransactionRepository transactionRepository;
+    TransactionMapper transactionMapper;
 
     @Override
     public JpaRepository<Transaction, Long> getRepository() {
-        return repository;
+        return transactionRepository;
     }
 
     @Override
     public BaseMapper<Transaction, TransactionRequestDto, TransactionResponseDto> getMapper() {
-        return mapper;
+        return transactionMapper;
     }
 }

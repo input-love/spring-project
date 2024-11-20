@@ -18,16 +18,16 @@ import org.springframework.stereotype.Service;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class AccountServiceImpl implements AccountService {
 
-    AccountRepository repository;
-    AccountMapper mapper;
+    AccountRepository accountRepository;
+    AccountMapper accountMapper;
 
     @Override
     public JpaRepository<Account, Long> getRepository() {
-        return repository;
+        return accountRepository;
     }
 
     @Override
     public BaseMapper<Account, AccountRequestDto, AccountResponseDto> getMapper() {
-        return mapper;
+        return accountMapper;
     }
 }

@@ -13,10 +13,10 @@ import org.springframework.stereotype.Service;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class LogDataSourceErrorServiceImpl implements LogDataSourceErrorService {
 
-    DataSourceErrorLogRepository repository;
+    DataSourceErrorLogRepository dataSourceErrorLogRepository;
 
     @Override
     public DataSourceErrorLog create(DataSourceErrorLog entity) {
-        return repository.save(entity);
+        return dataSourceErrorLogRepository.save(entity);
     }
 }

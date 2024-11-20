@@ -18,16 +18,16 @@ import org.springframework.stereotype.Service;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class ClientServiceImpl implements ClientService {
 
-    ClientRepository repository;
-    ClientMapper mapper;
+    ClientRepository clientRepository;
+    ClientMapper clientMapper;
 
     @Override
     public JpaRepository<Client, Long> getRepository() {
-        return repository;
+        return clientRepository;
     }
 
     @Override
     public BaseMapper<Client, ClientRequestDto, ClientResponseDto> getMapper() {
-        return mapper;
+        return clientMapper;
     }
 }
