@@ -2,6 +2,7 @@ package andrew.samardak.spring_aop.entity;
 
 import andrew.samardak.spring_aop.utils.enums.AccountStatus;
 import andrew.samardak.spring_aop.utils.enums.AccountType;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -39,4 +40,7 @@ public class Account {
     private BigDecimal balance;
 
     private BigDecimal frozenAmount;
+
+    @ManyToOne
+    private Client client;
 }
