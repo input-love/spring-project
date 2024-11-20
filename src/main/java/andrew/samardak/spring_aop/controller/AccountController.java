@@ -24,13 +24,13 @@ import org.springframework.web.bind.annotation.RestController;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class AccountController {
 
-    AccountService service;
+    AccountService accountService;
 
     @PostMapping
     public AccountResponseDto create(
             @RequestBody AccountRequestDto dto
     ) {
-        return service.create(dto);
+        return accountService.create(dto);
     }
 
     @Metric(1)
@@ -38,7 +38,7 @@ public class AccountController {
     public AccountResponseDto read(
             @PathVariable Long id
     ) {
-        return service.read(id);
+        return accountService.read(id);
     }
 
     @PatchMapping("/{id}")
@@ -46,13 +46,13 @@ public class AccountController {
             @PathVariable Long id,
             @RequestBody AccountRequestDto dto
     ) {
-        return service.update(dto, id);
+        return accountService.update(dto, id);
     }
 
     @DeleteMapping("/{id}")
     public void delete(
             @PathVariable Long id
     ) {
-        service.delete(id);
+        accountService.delete(id);
     }
 }

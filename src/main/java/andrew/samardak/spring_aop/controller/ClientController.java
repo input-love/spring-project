@@ -23,20 +23,20 @@ import org.springframework.web.bind.annotation.RestController;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class ClientController {
 
-    ClientService service;
+    ClientService clientService;
 
     @PostMapping
     public ClientResponseDto create(
             @RequestBody ClientRequestDto dto
     ) {
-        return service.create(dto);
+        return clientService.create(dto);
     }
 
     @GetMapping("/{id}")
     public ClientResponseDto read(
             @PathVariable Long id
     ) {
-        return service.read(id);
+        return clientService.read(id);
     }
 
     @PatchMapping("/{id}")
@@ -44,13 +44,13 @@ public class ClientController {
             @PathVariable Long id,
             @RequestBody ClientRequestDto dto
     ) {
-        return service.update(dto, id);
+        return clientService.update(dto, id);
     }
 
     @DeleteMapping("/{id}")
     public void delete(
             @PathVariable Long id
     ) {
-        service.delete(id);
+        clientService.delete(id);
     }
 }

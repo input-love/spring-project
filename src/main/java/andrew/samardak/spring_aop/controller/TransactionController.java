@@ -23,20 +23,20 @@ import org.springframework.web.bind.annotation.RestController;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class TransactionController {
 
-    TransactionService service;
+    TransactionService transactionService;
 
     @PostMapping
     public TransactionResponseDto create(
             @RequestBody TransactionRequestDto dto
     ) {
-        return service.create(dto);
+        return transactionService.create(dto);
     }
 
     @GetMapping("/{id}")
     public TransactionResponseDto read(
             @PathVariable Long id
     ) {
-        return service.read(id);
+        return transactionService.read(id);
     }
 
     @PatchMapping("/{id}")
@@ -44,13 +44,13 @@ public class TransactionController {
             @PathVariable Long id,
             @RequestBody TransactionRequestDto dto
     ) {
-        return service.update(dto, id);
+        return transactionService.update(dto, id);
     }
 
     @DeleteMapping("/{id}")
     public void delete(
             @PathVariable Long id
     ) {
-        service.delete(id);
+        transactionService.delete(id);
     }
 }
