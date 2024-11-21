@@ -2,7 +2,10 @@ package andrew.samardak.spring_aop.entity;
 
 import andrew.samardak.spring_aop.utils.enums.AccountStatus;
 import andrew.samardak.spring_aop.utils.enums.AccountType;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -17,6 +20,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -42,5 +47,9 @@ public class Account {
     private BigDecimal frozenAmount;
 
     @ManyToOne
+    @JoinColumn(name = "client_id", nullable = false)
     private Client client;
+
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Transaction> transactions = new ArrayList<>();
 }
