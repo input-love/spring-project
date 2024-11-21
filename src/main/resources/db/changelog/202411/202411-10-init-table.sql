@@ -25,7 +25,7 @@ CREATE TABLE accounts
     account_status VARCHAR(255)   NOT NULL,
     balance        NUMERIC(10, 2) NOT NULL,
     frozen_amount  NUMERIC(10, 2) NOT NULL,
-    client_id      BIGINT REFERENCES clients (id)
+    client_id      BIGINT REFERENCES clients (id) ON DELETE CASCADE
 );
 
 COMMENT ON TABLE accounts IS 'Таблица для хранения информации об аккаунтах пользователей';
@@ -43,7 +43,7 @@ CREATE TABLE transactions
     transaction_status VARCHAR(255)   NOT NULL,
     amount             NUMERIC(10, 2) NOT NULL,
     transaction_time   TIMESTAMP      NOT NULL,
-    account_id         BIGINT REFERENCES accounts (id)
+    account_id         BIGINT REFERENCES accounts (id) ON DELETE CASCADE
 );
 
 COMMENT ON TABLE transactions IS 'Таблица для хранения транзакций по аккаунтам';
