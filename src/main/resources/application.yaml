@@ -22,6 +22,7 @@ spring-project:
   kafka:
     topic:
       metrics: t1_demo_metrics
+      transaction-accept: t1_demo_transaction_accept
       accounts:
         id: spring-aop-kafka-accounts
         name: t1_demo_accounts
