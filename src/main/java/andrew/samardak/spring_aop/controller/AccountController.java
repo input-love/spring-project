@@ -4,7 +4,7 @@ import andrew.samardak.spring_aop.aspect.LogDataSourceError;
 import andrew.samardak.spring_aop.aspect.Metric;
 import andrew.samardak.spring_aop.dto.request.AccountRequestDto;
 import andrew.samardak.spring_aop.dto.response.AccountResponseDto;
-import andrew.samardak.spring_aop.service.AccountService;
+import andrew.samardak.spring_aop.facade.AccountFacade;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -24,13 +24,13 @@ import org.springframework.web.bind.annotation.RestController;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class AccountController {
 
-    AccountService accountService;
+    AccountFacade accountFacade;
 
     @PostMapping
     public AccountResponseDto create(
             @RequestBody AccountRequestDto dto
     ) {
-        return accountService.create(dto);
+        return accountFacade.create(dto);
     }
 
     @Metric(1)
@@ -38,7 +38,7 @@ public class AccountController {
     public AccountResponseDto read(
             @PathVariable Long id
     ) {
-        return accountService.read(id);
+        return accountFacade.read(id);
     }
 
     @PatchMapping("/{id}")
@@ -46,13 +46,13 @@ public class AccountController {
             @PathVariable Long id,
             @RequestBody AccountRequestDto dto
     ) {
-        return accountService.update(dto, id);
+        return accountFacade.update(dto, id);
     }
 
     @DeleteMapping("/{id}")
     public void delete(
             @PathVariable Long id
     ) {
-        accountService.delete(id);
+        accountFacade.delete(id);
     }
 }

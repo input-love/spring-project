@@ -3,7 +3,7 @@ package andrew.samardak.spring_aop.controller;
 import andrew.samardak.spring_aop.aspect.LogDataSourceError;
 import andrew.samardak.spring_aop.dto.request.TransactionRequestDto;
 import andrew.samardak.spring_aop.dto.response.TransactionResponseDto;
-import andrew.samardak.spring_aop.service.TransactionService;
+import andrew.samardak.spring_aop.facade.TransactionFacade;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -23,20 +23,20 @@ import org.springframework.web.bind.annotation.RestController;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class TransactionController {
 
-    TransactionService transactionService;
+    TransactionFacade transactionFacade;
 
     @PostMapping
     public TransactionResponseDto create(
             @RequestBody TransactionRequestDto dto
     ) {
-        return transactionService.create(dto);
+        return transactionFacade.create(dto);
     }
 
     @GetMapping("/{id}")
     public TransactionResponseDto read(
             @PathVariable Long id
     ) {
-        return transactionService.read(id);
+        return transactionFacade.read(id);
     }
 
     @PatchMapping("/{id}")
@@ -44,13 +44,13 @@ public class TransactionController {
             @PathVariable Long id,
             @RequestBody TransactionRequestDto dto
     ) {
-        return transactionService.update(dto, id);
+        return transactionFacade.update(dto, id);
     }
 
     @DeleteMapping("/{id}")
     public void delete(
             @PathVariable Long id
     ) {
-        transactionService.delete(id);
+        transactionFacade.delete(id);
     }
 }

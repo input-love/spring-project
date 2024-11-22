@@ -3,10 +3,12 @@ package andrew.samardak.spring_aop.service.impl;
 import andrew.samardak.spring_aop.dto.request.AccountRequestDto;
 import andrew.samardak.spring_aop.dto.response.AccountResponseDto;
 import andrew.samardak.spring_aop.entity.Account;
+import andrew.samardak.spring_aop.entity.Client;
 import andrew.samardak.spring_aop.mappers.AccountMapper;
 import andrew.samardak.spring_aop.mappers.BaseMapper;
 import andrew.samardak.spring_aop.repository.AccountRepository;
 import andrew.samardak.spring_aop.service.AccountService;
+import andrew.samardak.spring_aop.service.ClientService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -18,8 +20,21 @@ import org.springframework.stereotype.Service;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class AccountServiceImpl implements AccountService {
 
+    ClientService clientService;
     AccountRepository accountRepository;
     AccountMapper accountMapper;
+
+    @Override
+    public Account create(AccountRequestDto dto) {
+        Long clientId = dto.getClientId();
+
+        Client client = clientService.getRepository().findById(clientId).orElseThrow();
+
+        Account account = accountMapper.toEntity(dto);
+        account.setClient(client);
+
+        return accountRepository.save(account);
+    }
 
     @Override
     public JpaRepository<Account, Long> getRepository() {

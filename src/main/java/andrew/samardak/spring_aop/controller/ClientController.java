@@ -3,7 +3,7 @@ package andrew.samardak.spring_aop.controller;
 import andrew.samardak.spring_aop.aspect.LogDataSourceError;
 import andrew.samardak.spring_aop.dto.request.ClientRequestDto;
 import andrew.samardak.spring_aop.dto.response.ClientResponseDto;
-import andrew.samardak.spring_aop.service.ClientService;
+import andrew.samardak.spring_aop.facade.ClientFacade;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -23,20 +23,20 @@ import org.springframework.web.bind.annotation.RestController;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class ClientController {
 
-    ClientService clientService;
+    ClientFacade clientFacade;
 
     @PostMapping
     public ClientResponseDto create(
             @RequestBody ClientRequestDto dto
     ) {
-        return clientService.create(dto);
+        return clientFacade.create(dto);
     }
 
     @GetMapping("/{id}")
     public ClientResponseDto read(
             @PathVariable Long id
     ) {
-        return clientService.read(id);
+        return clientFacade.read(id);
     }
 
     @PatchMapping("/{id}")
@@ -44,13 +44,13 @@ public class ClientController {
             @PathVariable Long id,
             @RequestBody ClientRequestDto dto
     ) {
-        return clientService.update(dto, id);
+        return clientFacade.update(dto, id);
     }
 
     @DeleteMapping("/{id}")
     public void delete(
             @PathVariable Long id
     ) {
-        clientService.delete(id);
+        clientFacade.delete(id);
     }
 }

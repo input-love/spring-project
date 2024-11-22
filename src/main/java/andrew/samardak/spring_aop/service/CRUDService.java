@@ -7,27 +7,22 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public interface CRUDService<Entity, ID, Request, Response> {
 
-    default Response create(Request dto) {
+    default Entity create(Request dto) {
         Entity entity = getMapper().toEntity(dto);
-        getRepository().save(entity);
 
-        return getMapper().toDto(entity);
+        return getRepository().save(entity);
     }
 
-    default Response read(ID id) {
-        Entity entity = getRepository().findById(id).orElseThrow();
-
-        return getMapper().toDto(entity);
+    default Entity read(ID id) {
+        return getRepository().findById(id).orElseThrow();
     }
 
-    default Response update(Request dto, ID id) {
+    default Entity update(Request dto, ID id) {
         Entity entity = getRepository().findById(id).orElseThrow();
 
         getMapper().updateEntity(entity, dto);
 
-        getRepository().saveAndFlush(entity);
-
-        return getMapper().toDto(entity);
+        return getRepository().saveAndFlush(entity);
     }
 
     default void delete(ID id) {
