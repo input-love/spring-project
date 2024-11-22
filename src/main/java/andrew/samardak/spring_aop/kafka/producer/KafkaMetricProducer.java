@@ -33,7 +33,7 @@ public class KafkaMetricProducer<V> {
         );
 
         ProducerRecord<String, V> record = new ProducerRecord<>(
-                kafkaTemplate.getDefaultTopic(),
+                "t1_demo_metrics",
                 null,
                 null,
                 UUID.randomUUID().toString(),
