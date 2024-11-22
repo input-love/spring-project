@@ -19,21 +19,27 @@ public class ClientFacade {
     ClientMapper clientMapper;
 
     public ClientResponseDto create(ClientRequestDto dto) {
-        Client account = clientService.create(dto);
+        Client entity = clientMapper.toEntity(dto);
 
-        return clientMapper.toDto(account);
+        Client client = clientService.create(entity);
+
+        return clientMapper.toDto(client);
     }
 
     public ClientResponseDto read(Long id) {
-        Client account = clientService.read(id);
+        Client client = clientService.read(id);
 
-        return clientMapper.toDto(account);
+        return clientMapper.toDto(client);
     }
 
     public ClientResponseDto update(ClientRequestDto dto, Long id) {
-        Client update = clientService.update(dto, id);
+        Client entity = clientMapper.toEntity(dto);
 
-        return clientMapper.toDto(update);
+        clientMapper.updateEntity(entity, dto);
+
+        Client client = clientService.update(entity);
+
+        return clientMapper.toDto(client);
     }
 
     public void delete(Long id) {

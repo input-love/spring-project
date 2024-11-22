@@ -19,7 +19,9 @@ public class AccountFacade {
     AccountMapper accountMapper;
 
     public AccountResponseDto create(AccountRequestDto dto) {
-        Account account = accountService.create(dto);
+        Account entity = accountMapper.toEntity(dto);
+
+        Account account = accountService.create(entity);
 
         return accountMapper.toDto(account);
     }
@@ -31,9 +33,13 @@ public class AccountFacade {
     }
 
     public AccountResponseDto update(AccountRequestDto dto, Long id) {
-        Account update = accountService.update(dto, id);
+        Account entity = accountMapper.toEntity(dto);
 
-        return accountMapper.toDto(update);
+        accountMapper.updateEntity(entity, dto);
+
+        Account account = accountService.update(entity);
+
+        return accountMapper.toDto(account);
     }
 
     public void delete(Long id) {

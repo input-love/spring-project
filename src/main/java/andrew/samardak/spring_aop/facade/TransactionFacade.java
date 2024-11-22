@@ -19,21 +19,27 @@ public class TransactionFacade {
     TransactionMapper transactionMapper;
 
     public TransactionResponseDto create(TransactionRequestDto dto) {
-        Transaction account = transactionService.create(dto);
+        Transaction entity = transactionMapper.toEntity(dto);
 
-        return transactionMapper.toDto(account);
+        Transaction transaction = transactionService.create(entity);
+
+        return transactionMapper.toDto(transaction);
     }
 
     public TransactionResponseDto read(Long id) {
-        Transaction account = transactionService.read(id);
+        Transaction transaction = transactionService.read(id);
 
-        return transactionMapper.toDto(account);
+        return transactionMapper.toDto(transaction);
     }
 
     public TransactionResponseDto update(TransactionRequestDto dto, Long id) {
-        Transaction update = transactionService.update(dto, id);
+        Transaction entity = transactionMapper.toEntity(dto);
 
-        return transactionMapper.toDto(update);
+        transactionMapper.updateEntity(entity, dto);
+
+        Transaction transaction = transactionService.update(entity);
+
+        return transactionMapper.toDto(transaction);
     }
 
     public void delete(Long id) {
