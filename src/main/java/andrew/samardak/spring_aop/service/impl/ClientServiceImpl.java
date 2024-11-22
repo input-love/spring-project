@@ -1,10 +1,6 @@
 package andrew.samardak.spring_aop.service.impl;
 
-import andrew.samardak.spring_aop.dto.request.ClientRequestDto;
-import andrew.samardak.spring_aop.dto.response.ClientResponseDto;
 import andrew.samardak.spring_aop.entity.Client;
-import andrew.samardak.spring_aop.mappers.BaseMapper;
-import andrew.samardak.spring_aop.mappers.ClientMapper;
 import andrew.samardak.spring_aop.repository.ClientRepository;
 import andrew.samardak.spring_aop.service.ClientService;
 import lombok.AccessLevel;
@@ -19,15 +15,9 @@ import org.springframework.stereotype.Service;
 public class ClientServiceImpl implements ClientService {
 
     ClientRepository clientRepository;
-    ClientMapper clientMapper;
 
     @Override
     public JpaRepository<Client, Long> getRepository() {
         return clientRepository;
-    }
-
-    @Override
-    public BaseMapper<Client, ClientRequestDto, ClientResponseDto> getMapper() {
-        return clientMapper;
     }
 }

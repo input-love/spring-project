@@ -1,15 +1,12 @@
 package andrew.samardak.spring_aop.service;
 
-import andrew.samardak.spring_aop.mappers.BaseMapper;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
-public interface CRUDService<Entity, ID, Request, Response> {
+public interface CRUDService<Entity, ID> {
 
-    default Entity create(Request dto) {
-        Entity entity = getMapper().toEntity(dto);
-
+    default Entity create(Entity entity) {
         return getRepository().save(entity);
     }
 
@@ -17,11 +14,7 @@ public interface CRUDService<Entity, ID, Request, Response> {
         return getRepository().findById(id).orElseThrow();
     }
 
-    default Entity update(Request dto, ID id) {
-        Entity entity = getRepository().findById(id).orElseThrow();
-
-        getMapper().updateEntity(entity, dto);
-
+    default Entity update(Entity entity) {
         return getRepository().saveAndFlush(entity);
     }
 
@@ -30,6 +23,4 @@ public interface CRUDService<Entity, ID, Request, Response> {
     }
 
     JpaRepository<Entity, ID> getRepository();
-
-    BaseMapper<Entity, Request, Response> getMapper();
 }
