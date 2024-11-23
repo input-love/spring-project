@@ -29,3 +29,6 @@ spring-project:
       transactions:
         id: spring-aop-kafka-transactions
         name: t1_demo_transactions
+      transactions-result:
+        id: spring-aop-kafka-transactions-result
+        name: t1_demo_transaction_result

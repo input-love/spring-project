@@ -2,6 +2,7 @@ package andrew.samardak.spring_aop.config;
 
 import andrew.samardak.spring_aop.dto.request.AccountRequestDto;
 import andrew.samardak.spring_aop.dto.request.TransactionRequestDto;
+import andrew.samardak.spring_aop.dto.request.TransactionResultRequestDto;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.context.annotation.Bean;
@@ -36,12 +37,17 @@ public class KafkaConsumerConfig {
     }
 
     @Bean
+    public ConcurrentKafkaListenerContainerFactory<String, AccountRequestDto> kafkaAccountListenerContainerFactory() {
+        return kafkaListenerContainerFactory(consumerFactory(AccountRequestDto.class));
+    }
+
+    @Bean
     public ConcurrentKafkaListenerContainerFactory<String, TransactionRequestDto> kafkaTransactionListenerContainerFactory() {
         return kafkaListenerContainerFactory(consumerFactory(TransactionRequestDto.class));
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, AccountRequestDto> kafkaAccountListenerContainerFactory() {
-        return kafkaListenerContainerFactory(consumerFactory(AccountRequestDto.class));
+    public ConcurrentKafkaListenerContainerFactory<String, TransactionResultRequestDto> kafkaTransactionResultListenerContainerFactory() {
+        return kafkaListenerContainerFactory(consumerFactory(TransactionResultRequestDto.class));
     }
 }
