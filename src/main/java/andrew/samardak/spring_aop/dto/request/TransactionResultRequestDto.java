@@ -10,5 +10,5 @@ public class TransactionResultRequestDto {
 
     private Long transactionId;
 
-    TransactionStatus transactionStatus;
+    private TransactionStatus transactionStatus;
 }
