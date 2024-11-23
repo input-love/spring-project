@@ -18,6 +18,14 @@ public class TransactionFacade {
     TransactionService transactionService;
     TransactionMapper transactionMapper;
 
+    public void processTransaction(TransactionRequestDto dto) {
+        Long accountId = dto.getAccountId();
+
+        Transaction entity = transactionMapper.toEntity(dto);
+
+        transactionService.processTransaction(entity, accountId);
+    }
+
     public TransactionResponseDto create(TransactionRequestDto dto) {
         Transaction entity = transactionMapper.toEntity(dto);
 
