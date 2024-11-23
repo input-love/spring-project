@@ -7,5 +7,7 @@ public interface TransactionService extends CRUDService<Transaction, Long> {
 
     void processTransaction(Transaction entity, Long accountId);
 
+    void handleTransaction(Long transactionId, Long accountId, TransactionStatus status);
+
     Transaction updateStatus(Transaction entity, TransactionStatus status);
 }

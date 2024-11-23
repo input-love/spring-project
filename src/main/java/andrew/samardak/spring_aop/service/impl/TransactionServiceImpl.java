@@ -17,6 +17,8 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -40,6 +42,36 @@ public class TransactionServiceImpl implements TransactionService {
             TransactionAcceptDto response = transactionAcceptMapper.toTransactionAcceptDto(account, transaction);
 
             kafkaTransactionAcceptProducer.sendMessage(response, buildHeader());
+        }
+    }
+
+    @Override
+    public void handleTransaction(Long transactionId, Long accountId, TransactionStatus status) {
+        switch (status) {
+            case ACCEPTED -> {
+                Transaction entity = transactionRepository.findById(transactionId).orElseThrow();
+                updateStatus(entity, TransactionStatus.ACCEPTED);
+            }
+            case BLOCKED -> {
+                List<Transaction> transactions = accountService.getTransactionsByAccountId(accountId);
+
+                BigDecimal sum = BigDecimal.ZERO;
+                for (Transaction transaction : transactions) {
+                    updateStatus(transaction, TransactionStatus.BLOCKED);
+                    sum = sum.add(transaction.getAmount());
+                }
+
+                Account account = accountService.read(accountId);
+                account.setAccountStatus(AccountStatus.BLOCKED);
+                account.setFrozenAmount(sum);
+                accountService.update(account);
+            }
+            case REJECTED -> {
+                Transaction entity = transactionRepository.findById(transactionId).orElseThrow();
+                updateStatus(entity, TransactionStatus.REJECTED);
+
+                accountService.updateBalance(accountId, entity.getAmount());
+            }
         }
     }
 
