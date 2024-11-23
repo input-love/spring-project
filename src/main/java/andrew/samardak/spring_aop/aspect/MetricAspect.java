@@ -1,6 +1,6 @@
 package andrew.samardak.spring_aop.aspect;
 
-import andrew.samardak.spring_aop.dto.kafka.MetricDto;
+import andrew.samardak.spring_aop.dto.response.MetricResponseDto;
 import andrew.samardak.spring_aop.kafka.producer.KafkaMetricProducer;
 import andrew.samardak.spring_aop.utils.constants.KafkaHeaderConstants;
 import lombok.AccessLevel;
@@ -21,7 +21,7 @@ import java.util.Map;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class MetricAspect {
 
-    KafkaMetricProducer<MetricDto> producer;
+    KafkaMetricProducer<MetricResponseDto> producer;
 
     @Around(
             value = "@annotation(metric)",
@@ -37,7 +37,7 @@ public class MetricAspect {
             long duration = Duration.between(startTime, Instant.now()).toMillis();
 
             if (duration > metric.value()) {
-                MetricDto message = buildMessage(pJoinPoint, duration);
+                MetricResponseDto message = buildMessage(pJoinPoint, duration);
                 Map<String, String> header = buildHeader();
 
                 producer.sendMessage(message, header);
@@ -53,8 +53,8 @@ public class MetricAspect {
         );
     }
 
-    private MetricDto buildMessage(ProceedingJoinPoint pJoinPoint, long duration) {
-        return new MetricDto(
+    private MetricResponseDto buildMessage(ProceedingJoinPoint pJoinPoint, long duration) {
+        return new MetricResponseDto(
                 duration,
                 pJoinPoint.getArgs(),
                 pJoinPoint.getSignature().toLongString()

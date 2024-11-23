@@ -1,11 +1,11 @@
-package andrew.samardak.spring_aop.dto.kafka;
+package andrew.samardak.spring_aop.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class MetricDto {
+public class MetricResponseDto {
 
     private long executionTimeMillis;
 

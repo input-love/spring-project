@@ -1,6 +1,6 @@
 package andrew.samardak.spring_aop.mappers;
 
-import andrew.samardak.spring_aop.dto.kafka.TransactionAcceptDto;
+import andrew.samardak.spring_aop.dto.response.TransactionAcceptResponseDto;
 import andrew.samardak.spring_aop.entity.Account;
 import andrew.samardak.spring_aop.entity.Transaction;
 import org.mapstruct.Mapper;
@@ -17,5 +17,5 @@ public interface TransactionAcceptMapper {
     @Mapping(target = "timestamp", expression = "java(LocalDateTime.now())")
     @Mapping(target = "transaction", expression = "java(new TransactionAcceptDto.TransactionDetails(transaction.getAmount()))")
     @Mapping(target = "account", expression = "java(new TransactionAcceptDto.AccountDetails(account.getBalance()))")
-    TransactionAcceptDto toTransactionAcceptDto(Account account, Transaction transaction);
+    TransactionAcceptResponseDto toTransactionAcceptDto(Account account, Transaction transaction);
 }
