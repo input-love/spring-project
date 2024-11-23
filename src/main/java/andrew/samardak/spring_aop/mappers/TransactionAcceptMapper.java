@@ -15,7 +15,7 @@ public interface TransactionAcceptMapper {
     @Mapping(source = "account.id", target = "accountId")
     @Mapping(source = "transaction.id", target = "transactionId")
     @Mapping(target = "timestamp", expression = "java(LocalDateTime.now())")
-    @Mapping(target = "transaction", expression = "java(new TransactionAcceptDto.TransactionDetails(transaction.getAmount()))")
-    @Mapping(target = "account", expression = "java(new TransactionAcceptDto.AccountDetails(account.getBalance()))")
+    @Mapping(target = "transaction", expression = "java(new TransactionAcceptResponseDto.TransactionDetails(transaction.getAmount()))")
+    @Mapping(target = "account", expression = "java(new TransactionAcceptResponseDto.AccountDetails(account.getBalance()))")
     TransactionAcceptResponseDto toTransactionAcceptDto(Account account, Transaction transaction);
 }
