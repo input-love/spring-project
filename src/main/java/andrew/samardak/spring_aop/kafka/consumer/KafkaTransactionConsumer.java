@@ -17,8 +17,8 @@ public class KafkaTransactionConsumer {
     TransactionFacade transactionFacade;
 
     @KafkaListener(
-            id = "${spring-project.kafka.topic.transactions.id}",
-            topics = "${spring-project.kafka.topic.transactions.name}",
+            id = "${spring-project.kafka.topics.consumer.transactions.id}",
+            topics = "${spring-project.kafka.topics.consumer.transactions.name}",
             containerFactory = "kafkaTransactionListenerContainerFactory"
     )
     public void listener(

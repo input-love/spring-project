@@ -20,15 +20,17 @@ spring:
 
 spring-project:
   kafka:
-    topic:
-      metrics: t1_demo_metrics
-      transaction-accept: t1_demo_transaction_accept
-      accounts:
-        id: spring-aop-kafka-accounts
-        name: t1_demo_accounts
-      transactions:
-        id: spring-aop-kafka-transactions
-        name: t1_demo_transactions
-      transactions-result:
-        id: spring-aop-kafka-transactions-result
-        name: t1_demo_transaction_result
+    topics:
+      producer:
+        metrics: t1_demo_metrics
+        transaction-accept: t1_demo_transaction_accept
+      consumer:
+        accounts:
+          id: spring-project-kafka-accounts
+          name: t1_demo_accounts
+        transactions:
+          id: spring-project-kafka-transactions
+          name: t1_demo_transactions
+        transactions-result:
+          id: spring-project-kafka-transactions-result
+          name: t1_demo_transaction_result

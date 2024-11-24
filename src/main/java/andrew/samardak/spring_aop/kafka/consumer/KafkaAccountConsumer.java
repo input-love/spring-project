@@ -17,8 +17,8 @@ public class KafkaAccountConsumer {
     AccountFacade accountFacade;
 
     @KafkaListener(
-            id = "${spring-project.kafka.topic.accounts.id}",
-            topics = "${spring-project.kafka.topic.accounts.name}",
+            id = "${spring-project.kafka.topics.consumer.accounts.id}",
+            topics = "${spring-project.kafka.topics.consumer.accounts.name}",
             containerFactory = "kafkaAccountListenerContainerFactory"
     )
     public void listener(
