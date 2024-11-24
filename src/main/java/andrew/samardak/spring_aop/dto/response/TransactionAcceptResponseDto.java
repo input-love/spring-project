@@ -1,9 +1,10 @@
 package andrew.samardak.spring_aop.dto.response;
 
+import andrew.samardak.spring_aop.dto.response.details.AccountDetailsDto;
+import andrew.samardak.spring_aop.dto.response.details.TransactionDetailsDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
@@ -18,19 +19,7 @@ public class TransactionAcceptResponseDto {
 
     private LocalDateTime timestamp;
 
-    private TransactionDetails transaction;
+    private AccountDetailsDto account;
 
-    private AccountDetails account;
-
-    @Data
-    @AllArgsConstructor
-    public static class TransactionDetails {
-        private BigDecimal amount;
-    }
-
-    @Data
-    @AllArgsConstructor
-    public static class AccountDetails {
-        private BigDecimal balance;
-    }
+    private TransactionDetailsDto transaction;
 }
