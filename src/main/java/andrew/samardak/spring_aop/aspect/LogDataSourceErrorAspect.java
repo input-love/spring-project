@@ -1,7 +1,7 @@
 package andrew.samardak.spring_aop.aspect;
 
 import andrew.samardak.spring_aop.entity.DataSourceErrorLog;
-import andrew.samardak.spring_aop.kafka.producer.KafkaMetricProducer;
+import andrew.samardak.spring_aop.kafka.producer.KafkaProducerService;
 import andrew.samardak.spring_aop.service.LogDataSourceErrorService;
 import andrew.samardak.spring_aop.utils.constants.KafkaHeaderConstants;
 import lombok.AccessLevel;
@@ -26,8 +26,9 @@ import java.util.concurrent.CompletableFuture;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class LogDataSourceErrorAspect {
 
-    KafkaMetricProducer<DataSourceErrorLog> producer;
     LogDataSourceErrorService service;
+
+    KafkaProducerService<DataSourceErrorLog> kafkaProducerService;
 
     @Pointcut("execution(* (@LogDataSourceError *).*(..))")
     public void methodsInAnnotatedClass() {
@@ -42,7 +43,10 @@ public class LogDataSourceErrorAspect {
         DataSourceErrorLog message = buildMessage(joinPoint, exception);
         Map<String, String> header = buildHeader();
 
-        CompletableFuture<SendResult<String, DataSourceErrorLog>> future = producer.sendMessage(message, header);
+        CompletableFuture<SendResult<String, DataSourceErrorLog>> future = kafkaProducerService.sendMessage(
+                "t1_demo_metrics", message, header
+        );
+
         future.whenComplete((result, ex) -> {
             if (ex == null) {
                 log.info("Sent message=[ {} ] with offset=[ {} ]", message, result.getRecordMetadata().offset());

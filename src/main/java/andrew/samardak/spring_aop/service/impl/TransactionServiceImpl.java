@@ -3,7 +3,7 @@ package andrew.samardak.spring_aop.service.impl;
 import andrew.samardak.spring_aop.dto.response.TransactionAcceptResponseDto;
 import andrew.samardak.spring_aop.entity.Account;
 import andrew.samardak.spring_aop.entity.Transaction;
-import andrew.samardak.spring_aop.kafka.producer.KafkaTransactionAcceptProducer;
+import andrew.samardak.spring_aop.kafka.producer.KafkaProducerService;
 import andrew.samardak.spring_aop.mappers.TransactionAcceptMapper;
 import andrew.samardak.spring_aop.repository.TransactionRepository;
 import andrew.samardak.spring_aop.service.AccountService;
@@ -30,7 +30,7 @@ public class TransactionServiceImpl implements TransactionService {
     TransactionRepository transactionRepository;
     TransactionAcceptMapper transactionAcceptMapper;
 
-    KafkaTransactionAcceptProducer<TransactionAcceptResponseDto> kafkaTransactionAcceptProducer;
+    KafkaProducerService<TransactionAcceptResponseDto> kafkaProducerService;
 
     @Override
     public void processTransaction(Transaction entity, Long accountId) {
@@ -41,7 +41,7 @@ public class TransactionServiceImpl implements TransactionService {
 
             TransactionAcceptResponseDto response = transactionAcceptMapper.toTransactionAcceptDto(account, transaction);
 
-            kafkaTransactionAcceptProducer.sendMessage(response, buildHeader());
+            kafkaProducerService.sendMessage("t1_demo_transaction_accept", response, buildHeader());
         }
     }
 

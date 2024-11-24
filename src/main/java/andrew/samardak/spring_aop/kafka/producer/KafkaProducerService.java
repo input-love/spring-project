@@ -19,11 +19,12 @@ import java.util.concurrent.CompletableFuture;
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class KafkaTransactionAcceptProducer<V> {
+public class KafkaProducerService<V> {
 
     KafkaTemplate<String, V> kafkaTemplate;
 
     public CompletableFuture<SendResult<String, V>> sendMessage(
+            String topic,
             V message,
             Map<String, String> headers
     ) {
@@ -33,7 +34,7 @@ public class KafkaTransactionAcceptProducer<V> {
         );
 
         ProducerRecord<String, V> record = new ProducerRecord<>(
-                "t1_demo_transaction_accept",
+                topic,
                 null,
                 null,
                 UUID.randomUUID().toString(),
