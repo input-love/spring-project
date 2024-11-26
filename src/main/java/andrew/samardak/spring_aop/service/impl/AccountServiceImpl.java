@@ -5,9 +5,7 @@ import andrew.samardak.spring_aop.entity.Transaction;
 import andrew.samardak.spring_aop.repository.AccountRepository;
 import andrew.samardak.spring_aop.service.AccountService;
 import andrew.samardak.spring_aop.utils.enums.AccountStatus;
-import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
@@ -16,10 +14,9 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class AccountServiceImpl implements AccountService {
 
-    AccountRepository accountRepository;
+    private final AccountRepository accountRepository;
 
     @Override
     public Account updateBalance(Long id, BigDecimal amount) {

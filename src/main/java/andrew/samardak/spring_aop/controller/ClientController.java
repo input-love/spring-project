@@ -4,9 +4,7 @@ import andrew.samardak.spring_aop.aspect.LogDataSourceError;
 import andrew.samardak.spring_aop.dto.request.ClientRequestDto;
 import andrew.samardak.spring_aop.dto.response.ClientResponseDto;
 import andrew.samardak.spring_aop.facade.ClientFacade;
-import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -20,10 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 @LogDataSourceError
 @RequiredArgsConstructor
 @RequestMapping("v1/clients")
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class ClientController {
 
-    ClientFacade clientFacade;
+    private final ClientFacade clientFacade;
 
     @PostMapping
     public ClientResponseDto create(

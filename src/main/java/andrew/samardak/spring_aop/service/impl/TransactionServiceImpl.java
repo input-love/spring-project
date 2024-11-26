@@ -11,9 +11,7 @@ import andrew.samardak.spring_aop.service.TransactionService;
 import andrew.samardak.spring_aop.utils.constants.KafkaHeaderConstants;
 import andrew.samardak.spring_aop.utils.enums.AccountStatus;
 import andrew.samardak.spring_aop.utils.enums.TransactionStatus;
-import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
@@ -23,14 +21,13 @@ import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class TransactionServiceImpl implements TransactionService {
 
-    AccountService accountService;
-    TransactionRepository transactionRepository;
-    TransactionAcceptMapper transactionAcceptMapper;
+    private final AccountService accountService;
+    private final TransactionRepository transactionRepository;
+    private final TransactionAcceptMapper transactionAcceptMapper;
 
-    KafkaProducerService<TransactionAcceptResponseDto> kafkaProducerService;
+    private final KafkaProducerService<TransactionAcceptResponseDto> kafkaProducerService;
 
     @Override
     public void processTransaction(Transaction entity, Long accountId) {

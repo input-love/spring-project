@@ -5,9 +5,7 @@ import andrew.samardak.spring_aop.aspect.Metric;
 import andrew.samardak.spring_aop.dto.request.AccountRequestDto;
 import andrew.samardak.spring_aop.dto.response.AccountResponseDto;
 import andrew.samardak.spring_aop.facade.AccountFacade;
-import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -21,10 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 @LogDataSourceError
 @RequiredArgsConstructor
 @RequestMapping("v1/accounts")
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class AccountController {
 
-    AccountFacade accountFacade;
+    private final AccountFacade accountFacade;
 
     @PostMapping
     public AccountResponseDto create(

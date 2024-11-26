@@ -5,18 +5,15 @@ import andrew.samardak.spring_aop.dto.response.AccountResponseDto;
 import andrew.samardak.spring_aop.entity.Account;
 import andrew.samardak.spring_aop.mappers.AccountMapper;
 import andrew.samardak.spring_aop.service.AccountService;
-import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class AccountFacade {
 
-    AccountService accountService;
-    AccountMapper accountMapper;
+    private final AccountService accountService;
+    private final AccountMapper accountMapper;
 
     public AccountResponseDto create(AccountRequestDto dto) {
         Account entity = accountMapper.toEntity(dto);

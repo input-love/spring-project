@@ -7,18 +7,15 @@ import andrew.samardak.spring_aop.entity.Transaction;
 import andrew.samardak.spring_aop.mappers.TransactionMapper;
 import andrew.samardak.spring_aop.service.TransactionService;
 import andrew.samardak.spring_aop.utils.enums.TransactionStatus;
-import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class TransactionFacade {
 
-    TransactionService transactionService;
-    TransactionMapper transactionMapper;
+    private final TransactionService transactionService;
+    private final TransactionMapper transactionMapper;
 
     public void processTransaction(TransactionRequestDto dto) {
         Long accountId = dto.getAccountId();

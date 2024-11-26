@@ -5,18 +5,15 @@ import andrew.samardak.spring_aop.dto.response.ClientResponseDto;
 import andrew.samardak.spring_aop.entity.Client;
 import andrew.samardak.spring_aop.mappers.ClientMapper;
 import andrew.samardak.spring_aop.service.ClientService;
-import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class ClientFacade {
 
-    ClientService clientService;
-    ClientMapper clientMapper;
+    private final ClientService clientService;
+    private final ClientMapper clientMapper;
 
     public ClientResponseDto create(ClientRequestDto dto) {
         Client entity = clientMapper.toEntity(dto);

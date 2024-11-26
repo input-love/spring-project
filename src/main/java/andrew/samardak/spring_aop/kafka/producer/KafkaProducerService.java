@@ -1,8 +1,6 @@
 package andrew.samardak.spring_aop.kafka.producer;
 
-import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.header.Headers;
 import org.apache.kafka.common.header.internals.RecordHeader;
@@ -18,10 +16,9 @@ import java.util.concurrent.CompletableFuture;
 
 @Service
 @RequiredArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class KafkaProducerService<V> {
 
-    KafkaTemplate<String, V> kafkaTemplate;
+    private final KafkaTemplate<String, V> kafkaTemplate;
 
     public CompletableFuture<SendResult<String, V>> sendMessage(
             String topic,
