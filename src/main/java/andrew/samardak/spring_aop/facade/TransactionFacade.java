@@ -48,7 +48,7 @@ public class TransactionFacade {
     }
 
     public TransactionResponseDto update(TransactionRequestDto dto, Long id) {
-        Transaction entity = transactionMapper.toEntity(dto);
+        Transaction entity = transactionService.read(id);
 
         transactionMapper.updateEntity(entity, dto);
 

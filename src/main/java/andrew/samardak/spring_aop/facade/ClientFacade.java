@@ -30,7 +30,7 @@ public class ClientFacade {
     }
 
     public ClientResponseDto update(ClientRequestDto dto, Long id) {
-        Client entity = clientMapper.toEntity(dto);
+        Client entity = clientService.read(id);
 
         clientMapper.updateEntity(entity, dto);
 

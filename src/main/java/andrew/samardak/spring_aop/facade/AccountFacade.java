@@ -30,7 +30,7 @@ public class AccountFacade {
     }
 
     public AccountResponseDto update(AccountRequestDto dto, Long id) {
-        Account entity = accountMapper.toEntity(dto);
+        Account entity = accountService.read(id);
 
         accountMapper.updateEntity(entity, dto);
 
