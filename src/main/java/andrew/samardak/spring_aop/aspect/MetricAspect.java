@@ -3,12 +3,11 @@ package andrew.samardak.spring_aop.aspect;
 import andrew.samardak.spring_aop.dto.response.MetricResponseDto;
 import andrew.samardak.spring_aop.kafka.producer.KafkaProducerService;
 import andrew.samardak.spring_aop.utils.constants.KafkaHeaderConstants;
-import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
@@ -18,10 +17,12 @@ import java.util.Map;
 @Aspect
 @Component
 @RequiredArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class MetricAspect {
 
-    KafkaProducerService<MetricResponseDto> kafkaProducerService;
+    @Value("${spring-project.kafka.topics.producer.metrics}")
+    private String topic;
+
+    private final KafkaProducerService<MetricResponseDto> kafkaProducerService;
 
     @Around(
             value = "@annotation(metric)",
@@ -40,7 +41,7 @@ public class MetricAspect {
                 MetricResponseDto message = buildMessage(pJoinPoint, duration);
                 Map<String, String> header = buildHeader();
 
-                kafkaProducerService.sendMessage("t1_demo_metrics", message, header);
+                kafkaProducerService.sendMessage(topic, message, header);
             }
         }
 
