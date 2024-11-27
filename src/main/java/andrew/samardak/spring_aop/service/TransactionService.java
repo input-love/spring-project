@@ -3,7 +3,7 @@ package andrew.samardak.spring_aop.service;
 import andrew.samardak.spring_aop.entity.Transaction;
 import andrew.samardak.spring_aop.utils.enums.TransactionStatus;
 
-public interface TransactionService extends HasRelations<Transaction, Long> {
+public interface TransactionService extends RelatedCRUDService<Transaction, Long> {
 
     void processTransaction(Transaction entity, Long accountId);
 

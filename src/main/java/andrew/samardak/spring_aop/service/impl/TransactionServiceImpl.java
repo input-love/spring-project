@@ -36,7 +36,7 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public void processTransaction(Transaction entity, Long accountId) {
         if (accountService.isAccountStatus(accountId, AccountStatus.OPEN)) {
-            Transaction transaction = this.create(entity, accountId);
+            Transaction transaction = this.createWithRelations(entity, accountId);
 
             this.updateTransactionStatus(transaction.getId(), TransactionStatus.REQUESTED);
 
@@ -88,7 +88,7 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public Transaction create(Transaction transaction, Long accountId) {
+    public Transaction createWithRelations(Transaction transaction, Long accountId) {
         Account account = accountService.read(accountId);
 
         transaction.setAccount(account);
