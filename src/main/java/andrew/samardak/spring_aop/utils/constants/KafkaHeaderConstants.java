@@ -6,5 +6,5 @@ public class KafkaHeaderConstants {
 
     public static final String ERROR_DATA_SOURCE_VALUE = "DATA_SOURCE";
     public static final String ERROR_METRIC_VALUE = "METRICS";
-    public static final String ERROR_TIMESTAMP_VALUE = "TRANSACTION";
+    public static final String TRANSACTION_ACCEPT_VALUE = "TRANSACTION";
 }

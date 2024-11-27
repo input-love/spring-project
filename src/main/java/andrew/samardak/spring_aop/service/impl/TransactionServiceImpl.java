@@ -104,7 +104,7 @@ public class TransactionServiceImpl implements TransactionService {
 
     private Map<String, String> buildHeader() {
         return Map.of(
-                KafkaHeaderConstants.ACCEPT_TYPE_HEADER, KafkaHeaderConstants.ERROR_TIMESTAMP_VALUE
+                KafkaHeaderConstants.ACCEPT_TYPE_HEADER, KafkaHeaderConstants.TRANSACTION_ACCEPT_VALUE
         );
     }
 }
