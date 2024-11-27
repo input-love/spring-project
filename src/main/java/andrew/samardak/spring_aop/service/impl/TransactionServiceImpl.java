@@ -12,6 +12,7 @@ import andrew.samardak.spring_aop.utils.constants.KafkaHeaderConstants;
 import andrew.samardak.spring_aop.utils.enums.AccountStatus;
 import andrew.samardak.spring_aop.utils.enums.TransactionStatus;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,9 @@ import java.util.Map;
 @Service
 @RequiredArgsConstructor
 public class TransactionServiceImpl implements TransactionService {
+
+    @Value("${spring-project.kafka.topics.producer.transaction-accept}")
+    private String topicTransactionAccept;
 
     private final AccountService accountService;
     private final TransactionRepository transactionRepository;
@@ -40,7 +44,7 @@ public class TransactionServiceImpl implements TransactionService {
 
             TransactionAcceptResponseDto response = transactionAcceptMapper.toTransactionAcceptDto(account, transaction);
 
-            kafkaProducerService.sendMessage("t1_demo_transaction_accept", response, buildHeader());
+            kafkaProducerService.sendMessage(topicTransactionAccept, response, buildHeader());
         }
     }
 
