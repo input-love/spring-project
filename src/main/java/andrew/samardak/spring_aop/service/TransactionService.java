@@ -9,5 +9,5 @@ public interface TransactionService extends HasRelations<Transaction, Long> {
 
     void handleTransaction(Long transactionId, Long accountId, TransactionStatus status);
 
-    Transaction updateStatus(Transaction entity, TransactionStatus status);
+    void updateTransactionStatus(Long transactionId, TransactionStatus status);
 }

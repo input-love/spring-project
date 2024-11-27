@@ -38,7 +38,7 @@ public class TransactionServiceImpl implements TransactionService {
         if (accountService.checkAccountStatus(accountId, AccountStatus.OPEN)) {
             Transaction transaction = this.create(entity, accountId);
 
-            this.updateStatus(transaction, TransactionStatus.REQUESTED);
+            this.updateTransactionStatus(transaction.getId(), TransactionStatus.REQUESTED);
 
             Account account = accountService.updateBalance(accountId, entity.getAmount());
 
@@ -52,15 +52,15 @@ public class TransactionServiceImpl implements TransactionService {
     public void handleTransaction(Long transactionId, Long accountId, TransactionStatus status) {
         switch (status) {
             case ACCEPTED -> {
-                Transaction entity = transactionRepository.findById(transactionId).orElseThrow();
-                updateStatus(entity, TransactionStatus.ACCEPTED);
+                Transaction transaction = transactionRepository.findById(transactionId).orElseThrow();
+                updateTransactionStatus(transaction.getId(), TransactionStatus.ACCEPTED);
             }
             case BLOCKED -> {
                 List<Transaction> transactions = accountService.getTransactionsByAccountId(accountId);
 
                 BigDecimal sum = BigDecimal.ZERO;
                 for (Transaction transaction : transactions) {
-                    updateStatus(transaction, TransactionStatus.BLOCKED);
+                    updateTransactionStatus(transaction.getId(), TransactionStatus.BLOCKED);
                     sum = sum.add(transaction.getAmount());
                 }
 
@@ -70,19 +70,21 @@ public class TransactionServiceImpl implements TransactionService {
                 accountService.update(account);
             }
             case REJECTED -> {
-                Transaction entity = transactionRepository.findById(transactionId).orElseThrow();
-                updateStatus(entity, TransactionStatus.REJECTED);
+                Transaction transaction = transactionRepository.findById(transactionId).orElseThrow();
+                updateTransactionStatus(transaction.getId(), TransactionStatus.REJECTED);
 
-                accountService.updateBalance(accountId, entity.getAmount());
+                accountService.updateBalance(accountId, transaction.getAmount());
             }
         }
     }
 
     @Override
-    public Transaction updateStatus(Transaction entity, TransactionStatus status) {
-        entity.setTransactionStatus(status);
+    public void updateTransactionStatus(Long transactionId, TransactionStatus status) {
+        Transaction transaction = transactionRepository.findById(transactionId).orElseThrow();
 
-        return transactionRepository.save(entity);
+        transaction.setTransactionStatus(status);
+
+        transactionRepository.save(transaction);
     }
 
     @Override
