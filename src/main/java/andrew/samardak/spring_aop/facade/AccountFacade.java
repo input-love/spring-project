@@ -18,7 +18,7 @@ public class AccountFacade {
     public AccountResponseDto create(AccountRequestDto dto) {
         Account entity = accountMapper.toEntity(dto);
 
-        Account account = accountService.create(entity);
+        Account account = accountService.create(entity, dto.getClientId());
 
         return accountMapper.toDto(account);
     }

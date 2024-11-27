@@ -80,6 +80,15 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
+    public Transaction create(Transaction transaction, Long accountId) {
+        Account account = accountService.read(accountId);
+
+        transaction.setAccount(account);
+
+        return transactionRepository.save(transaction);
+    }
+
+    @Override
     public JpaRepository<Transaction, Long> getRepository() {
         return transactionRepository;
     }

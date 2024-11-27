@@ -7,7 +7,7 @@ import andrew.samardak.spring_aop.utils.enums.AccountStatus;
 import java.math.BigDecimal;
 import java.util.List;
 
-public interface AccountService extends CRUDService<Account, Long> {
+public interface AccountService extends HasRelations<Account, Long> {
 
     Account updateBalance(Long id, BigDecimal amount);
 

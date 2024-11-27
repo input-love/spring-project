@@ -36,7 +36,7 @@ public class TransactionFacade {
     public TransactionResponseDto create(TransactionRequestDto dto) {
         Transaction entity = transactionMapper.toEntity(dto);
 
-        Transaction transaction = transactionService.create(entity);
+        Transaction transaction = transactionService.create(entity, dto.getAccountId());
 
         return transactionMapper.toDto(transaction);
     }
