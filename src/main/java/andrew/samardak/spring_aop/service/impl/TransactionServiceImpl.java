@@ -25,7 +25,7 @@ import java.util.Map;
 public class TransactionServiceImpl implements TransactionService {
 
     @Value("${spring-project.kafka.topics.producer.transaction-accept}")
-    private String topicTransactionAccept;
+    private String topic;
 
     private final AccountService accountService;
     private final TransactionRepository transactionRepository;
@@ -35,16 +35,16 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public void processTransaction(Transaction entity, Long accountId) {
-        if (accountService.checkAccountStatus(accountId, AccountStatus.OPEN)) {
+        if (accountService.isAccountStatus(accountId, AccountStatus.OPEN)) {
             Transaction transaction = this.create(entity, accountId);
 
             this.updateTransactionStatus(transaction.getId(), TransactionStatus.REQUESTED);
 
-            Account account = accountService.updateBalance(accountId, transaction.getAmount());
+            Account account = accountService.updateAccountBalance(accountId, transaction.getAmount());
 
             TransactionAcceptResponseDto message = transactionAcceptMapper.toTransactionAcceptDto(account, transaction);
 
-            kafkaProducerService.sendMessage(topicTransactionAccept, message, buildHeader());
+            kafkaProducerService.sendMessage(topic, message, buildHeader());
         }
     }
 
@@ -73,7 +73,7 @@ public class TransactionServiceImpl implements TransactionService {
                 Transaction transaction = transactionRepository.findById(transactionId).orElseThrow();
                 updateTransactionStatus(transaction.getId(), TransactionStatus.REJECTED);
 
-                accountService.updateBalance(accountId, transaction.getAmount());
+                accountService.updateAccountBalance(accountId, transaction.getAmount());
             }
         }
     }

@@ -22,8 +22,8 @@ public class AccountServiceImpl implements AccountService {
     private final AccountRepository accountRepository;
 
     @Override
-    public Account updateBalance(Long id, BigDecimal amount) {
-        Account account = accountRepository.findById(id).orElseThrow();
+    public Account updateAccountBalance(Long accountId, BigDecimal amount) {
+        Account account = accountRepository.findById(accountId).orElseThrow();
 
         BigDecimal updatedBalance = account.getBalance().subtract(amount);
         account.setBalance(updatedBalance);
@@ -32,15 +32,15 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public List<Transaction> getTransactionsByAccountId(Long id) {
-        Account account = accountRepository.findById(id).orElseThrow();
+    public List<Transaction> getTransactionsByAccountId(Long accountId) {
+        Account account = accountRepository.findById(accountId).orElseThrow();
 
         return account.getTransactions();
     }
 
     @Override
-    public boolean checkAccountStatus(Long id, AccountStatus status) {
-        Account account = accountRepository.findById(id).orElseThrow();
+    public boolean isAccountStatus(Long accountId, AccountStatus status) {
+        Account account = accountRepository.findById(accountId).orElseThrow();
 
         return account.getAccountStatus().equals(status);
     }

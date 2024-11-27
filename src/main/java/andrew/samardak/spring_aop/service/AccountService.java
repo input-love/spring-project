@@ -9,9 +9,9 @@ import java.util.List;
 
 public interface AccountService extends HasRelations<Account, Long> {
 
-    Account updateBalance(Long id, BigDecimal amount);
+    Account updateAccountBalance(Long accountId, BigDecimal amount);
 
-    List<Transaction> getTransactionsByAccountId(Long id);
+    List<Transaction> getTransactionsByAccountId(Long accountId);
 
-    boolean checkAccountStatus(Long id, AccountStatus status);
+    boolean isAccountStatus(Long accountId, AccountStatus status);
 }
