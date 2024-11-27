@@ -32,7 +32,9 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public void processTransaction(Transaction entity, Long accountId) {
         if (accountService.checkAccountStatus(accountId, AccountStatus.OPEN)) {
-            Transaction transaction = updateStatus(entity, TransactionStatus.REQUESTED);
+            Transaction transaction = this.create(entity, accountId);
+
+            this.updateStatus(transaction, TransactionStatus.REQUESTED);
 
             Account account = accountService.updateBalance(accountId, entity.getAmount());
 
