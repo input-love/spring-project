@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface AccountService extends RelatedCRUDService<Account, Long> {
 
-    Account updateAccountBalance(Long accountId, BigDecimal amount);
+    void updateAccountBalance(Long accountId, BigDecimal balance);
 
     List<Transaction> getTransactionsByAccountId(Long accountId);
 

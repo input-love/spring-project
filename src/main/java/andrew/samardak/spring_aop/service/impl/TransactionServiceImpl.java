@@ -37,10 +37,11 @@ public class TransactionServiceImpl implements TransactionService {
     public void processTransaction(Transaction entity, Long accountId) {
         if (accountService.isAccountStatus(accountId, AccountStatus.OPEN)) {
             Transaction transaction = this.createWithRelations(entity, accountId);
-
             this.updateTransactionStatus(transaction.getId(), TransactionStatus.REQUESTED);
 
-            Account account = accountService.updateAccountBalance(accountId, transaction.getAmount());
+            Account account = accountService.read(accountId);
+            BigDecimal balance = account.getBalance().subtract(transaction.getAmount());
+            accountService.updateAccountBalance(account.getId(), balance);
 
             TransactionAcceptResponseDto message = transactionAcceptMapper.toTransactionAcceptDto(account, transaction);
 

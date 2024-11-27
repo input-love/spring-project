@@ -22,13 +22,12 @@ public class AccountServiceImpl implements AccountService {
     private final AccountRepository accountRepository;
 
     @Override
-    public Account updateAccountBalance(Long accountId, BigDecimal amount) {
+    public void updateAccountBalance(Long accountId, BigDecimal balance) {
         Account account = accountRepository.findById(accountId).orElseThrow();
 
-        BigDecimal updatedBalance = account.getBalance().subtract(amount);
-        account.setBalance(updatedBalance);
+        account.setBalance(balance);
 
-        return accountRepository.save(account);
+        accountRepository.save(account);
     }
 
     @Override
