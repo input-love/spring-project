@@ -40,11 +40,11 @@ public class TransactionServiceImpl implements TransactionService {
 
             this.updateTransactionStatus(transaction.getId(), TransactionStatus.REQUESTED);
 
-            Account account = accountService.updateBalance(accountId, entity.getAmount());
+            Account account = accountService.updateBalance(accountId, transaction.getAmount());
 
-            TransactionAcceptResponseDto response = transactionAcceptMapper.toTransactionAcceptDto(account, transaction);
+            TransactionAcceptResponseDto message = transactionAcceptMapper.toTransactionAcceptDto(account, transaction);
 
-            kafkaProducerService.sendMessage(topicTransactionAccept, response, buildHeader());
+            kafkaProducerService.sendMessage(topicTransactionAccept, message, buildHeader());
         }
     }
 
