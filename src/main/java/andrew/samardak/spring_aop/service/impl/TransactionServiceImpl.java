@@ -35,15 +35,16 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public void processTransaction(Transaction entity, Long accountId) {
-        if (accountService.isAccountStatus(accountId, AccountStatus.OPEN)) {
+        Account account = accountService.read(accountId);
+
+        if (account.getAccountStatus().equals(AccountStatus.OPEN)) {
             Transaction transaction = this.createWithRelations(entity, accountId);
             this.updateTransactionStatus(transaction.getId(), TransactionStatus.REQUESTED);
 
-            Account account = accountService.read(accountId);
+            TransactionAcceptResponseDto message = transactionAcceptMapper.toTransactionAcceptDto(account, transaction);
+
             BigDecimal balance = account.getBalance().subtract(transaction.getAmount());
             accountService.updateAccountBalance(account.getId(), balance);
-
-            TransactionAcceptResponseDto message = transactionAcceptMapper.toTransactionAcceptDto(account, transaction);
 
             kafkaProducerService.sendMessage(topic, message, buildHeader());
         }
