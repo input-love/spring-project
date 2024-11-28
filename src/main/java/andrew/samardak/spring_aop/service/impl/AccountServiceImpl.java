@@ -2,7 +2,6 @@ package andrew.samardak.spring_aop.service.impl;
 
 import andrew.samardak.spring_aop.entity.Account;
 import andrew.samardak.spring_aop.entity.Client;
-import andrew.samardak.spring_aop.entity.Transaction;
 import andrew.samardak.spring_aop.repository.AccountRepository;
 import andrew.samardak.spring_aop.service.AccountService;
 import andrew.samardak.spring_aop.service.ClientService;
@@ -12,7 +11,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -28,13 +26,6 @@ public class AccountServiceImpl implements AccountService {
         account.setBalance(balance);
 
         accountRepository.save(account);
-    }
-
-    @Override
-    public List<Transaction> getTransactionsByAccountId(Long accountId) {
-        Account account = accountRepository.findById(accountId).orElseThrow();
-
-        return account.getTransactions();
     }
 
     @Override
