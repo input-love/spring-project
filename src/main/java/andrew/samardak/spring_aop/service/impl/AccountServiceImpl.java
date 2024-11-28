@@ -29,13 +29,6 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public boolean isAccountStatus(Long accountId, AccountStatus status) {
-        Account account = accountRepository.findById(accountId).orElseThrow();
-
-        return account.getAccountStatus().equals(status);
-    }
-
-    @Override
     public Account createWithRelations(Account account, Long clientId) {
         Client client = clientService.read(clientId);
 
