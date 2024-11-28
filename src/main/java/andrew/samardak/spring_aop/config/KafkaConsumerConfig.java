@@ -25,7 +25,8 @@ public class KafkaConsumerConfig {
                 ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class,
                 ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class,
                 JsonDeserializer.VALUE_DEFAULT_TYPE, valueType.getName(),
-                JsonDeserializer.TRUSTED_PACKAGES, "*"
+                JsonDeserializer.TRUSTED_PACKAGES, "*",
+                JsonDeserializer.TYPE_MAPPINGS, ""
         ));
     }
 
