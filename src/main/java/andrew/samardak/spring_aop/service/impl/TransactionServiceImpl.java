@@ -51,30 +51,31 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public void handleTransaction(Long transactionId, Long accountId, TransactionStatus status) {
+        Account account = accountService.read(accountId);
+        Transaction transaction = transactionRepository.findById(transactionId).orElseThrow();
+
         switch (status) {
             case ACCEPTED -> {
-                Transaction transaction = transactionRepository.findById(transactionId).orElseThrow();
                 updateTransactionStatus(transaction.getId(), TransactionStatus.ACCEPTED);
             }
             case BLOCKED -> {
-                List<Transaction> transactions = accountService.getTransactionsByAccountId(accountId);
+                List<Transaction> transactions = transactionRepository.findByAccountId(account.getId());
 
-                BigDecimal sum = BigDecimal.ZERO;
-                for (Transaction transaction : transactions) {
-                    updateTransactionStatus(transaction.getId(), TransactionStatus.BLOCKED);
-                    sum = sum.add(transaction.getAmount());
+                for (Transaction entity : transactions) {
+                    updateTransactionStatus(entity.getId(), TransactionStatus.BLOCKED);
                 }
 
-                Account account = accountService.read(accountId);
+                BigDecimal frozenAmount = transactionRepository.sumAmountByAccountId(account.getId());
+
                 account.setAccountStatus(AccountStatus.BLOCKED);
-                account.setFrozenAmount(sum);
+                account.setFrozenAmount(frozenAmount);
                 accountService.update(account);
             }
             case REJECTED -> {
-                Transaction transaction = transactionRepository.findById(transactionId).orElseThrow();
                 updateTransactionStatus(transaction.getId(), TransactionStatus.REJECTED);
 
-                accountService.updateAccountBalance(accountId, transaction.getAmount());
+                BigDecimal balance = account.getBalance().add(transaction.getAmount());
+                accountService.updateAccountBalance(accountId, balance);
             }
         }
     }
